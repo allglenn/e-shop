@@ -4,10 +4,10 @@
   "description": "backend of the eshop",
   "main": "app.js",
   "scripts": {
-    "start": "../node_modules/.bin/nodemon app.js",
+    "start": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "allglenn",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.1",
@@ -18,7 +18,6 @@
     "express-jwt": "^6.1.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.19",
-    "morgan": "^1.10.0",
-    "nodemon": "^2.0.6"
+    "morgan": "^1.10.0"
   }
 }
