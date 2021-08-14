@@ -1,2 +1,7 @@
 # e-shop
-small eshop api build in nodejs 
+eshop API based build in using : node , express, mongo
+## features
+- Athentification 
+- CRUD on products,product categories,users,orders
+- manage env variables 
+
