@@ -70,4 +70,10 @@ router.post(`/login`, async (req, res) => {
 })
 
 
+router.get(`/get/count`, async (req, res) => {
+    const userCount = await User.countDocuments();
+    res.status(200).json({
+        count: userCount
+    });
+})
 module.exports = router;
