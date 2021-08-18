@@ -13,6 +13,7 @@ router.get(`/:id`, async (req, res) => {
     res.send(order);
 })
 
+r
 router.get(`/`, async (req, res) => {
     const orderList = await Order.find().populate('user', ['name', 'email'])
         .populate({
@@ -67,6 +68,17 @@ router.post(`/`, async (req, res) => {
             error: error,
             success: false
         })
+    })
+})
+
+
+router.put(`/:id`, async (req, res) => {
+
+    const order = await Order.findByIdAndUpdate(req.params.id, {status: req.body.status}).then(category => {
+        res.status(200).json(order)
+    }).catch(err => {
+        res.status(200).json({success: false, err: err})
+
     })
 })
 module.exports = router;
