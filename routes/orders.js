@@ -5,7 +5,11 @@ const router = express.Router();
 
 router.get(`/:id`, async (req, res) => {
 
-    const order = await Order.findById(req.params.id).populate('user', ['name', 'email','city']);
+    const order = await Order.findById(req.params.id).populate('user', ['name', 'email','city'])
+        .populate({
+            path: "orderItems",
+            populate: 'product'
+        });
 
     if (!order) {
         res.status(500).json({success: false})
@@ -13,7 +17,7 @@ router.get(`/:id`, async (req, res) => {
     res.send(order);
 })
 
-r
+
 router.get(`/`, async (req, res) => {
     const orderList = await Order.find().populate('user', ['name', 'email'])
         .populate({
