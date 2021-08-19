@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get(`/:id`, async (req, res) => {
 
-    const order = await Order.findById(req.params.id).populate('user', ['name', 'email','city'])
+    const order = await Order.findById(req.params.id).populate('user', ['name', 'email', 'city'])
         .populate({
             path: "orderItems",
             populate: 'product'
@@ -25,8 +25,8 @@ router.get(`/`, async (req, res) => {
             populate: 'product'
         })
         .sort({
-        "dateOrdered": -1
-    });
+            "dateOrdered": -1
+        });
 
     if (!orderList) {
         res.status(500).json({success: false})
@@ -49,6 +49,15 @@ router.post(`/`, async (req, res) => {
 
     const orderItemsIdsResolved = await orderItems;
     let totalPrice = 0;
+    let totalPrices = Promise.all(orderItemsIdsResolved.map(async (orderItemId) => {
+        let currentOrderItem = await OrderItem.findById(orderItemId).populate("product", "price");
+        return currentOrderItem.product.price * currentOrderItem.quantity;
+    }))
+
+    let totalPricesResolved = await totalPrices;
+    totalPrice = totalPricesResolved.reduce((a, b) => a + b, 0);
+
+
     let order = new Order(
         {
             orderItems: orderItemsIdsResolved,
