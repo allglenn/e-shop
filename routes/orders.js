@@ -94,4 +94,21 @@ router.put(`/:id`, async (req, res) => {
 
     })
 })
+
+router.get(`/get/totalSales`, async (req, res) => {
+
+    const totalSales = await Order.aggregate([{$group: {_id: null, totalSales: {$sum: '$totalPrice'}}}]);
+    if (!totalSales) {
+        res.status(500).json({success: false, message: "can not get total sales"})
+    }
+    res.status(200).json({totalSales: totalSales.pop().totalSales});
+})
+
+
+router.get(`/get/count`, async (req, res) => {
+    const orderCount = await Order.countDocuments();
+    res.status(200).json({
+        count: orderCount
+    });
+})
 module.exports = router;
