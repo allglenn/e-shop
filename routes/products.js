@@ -67,7 +67,7 @@ router.delete(`/:id`, async (req, res) => {
 router.post(`/`, uploadOptions.single("image"),async (req, res) => {
     const category = await Category.findById(req.body.category);
     if (!category) return res.status(400).send('Invalid Category')
-    const fileName = req.file.originalname;
+    const fileName = req.file.filename;
     const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`;
     let product = new Product({
         name: req.body.name,

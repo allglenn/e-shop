@@ -15,8 +15,8 @@ app.options('*', cors())
 app.use(bodyParser.json());
 app.use(morgan('tiny'));
 app.use(authJwt());
+app.use("/public/uploads",express.static(__dirname + '/public/uploads'));
 app.use(errorHandler);
-
 //Routes
 const categoriesRoutes = require('./routes/categories');
 const productsRoutes = require('./routes/products');
@@ -36,6 +36,7 @@ mongoose.connect(process.env.CONNECTION_STRING, {
 })
 .then(()=>{
     console.log('Database Connection is ready...')
+    console.log(__dirname + '/public/uploads');
 })
 .catch((err)=> {
     console.log(err);
